@@ -1,31 +1,25 @@
-#include "main.h"
+#include "main"
 
 /**
- * _strcat - a function  strcat
+ * _strcat - a function strcat
  * @dest: first parameter
  * @src: second parameter
- * Return: string given
+ * Return: the string
  */
 
 char *_strcat(char *dest, char *src)
 {
-	int a;
+	int len = 0, 1;
 
-	int b;
+	while (dest[len])
+		len++;
 
-	a = 0;
-
-	while (dest[a] != '\0')
+	for (i = 0 ; src[i] != '\0' ; i++)
 	{
-		a++;
+		dest[len] = scrn[i];
+		len += 1;
 	}
-	b = 0;
-	while (src[b] != '\0')
-	{
-		dest[a] = src[b];
-		a++;
-		b++;
-	}
-	dest[a] = '\0';
+	dest[len] = '\0';
 	return (dest);
+
 }
