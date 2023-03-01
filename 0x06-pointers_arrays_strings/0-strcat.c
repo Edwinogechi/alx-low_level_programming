@@ -1,25 +1,23 @@
 #include "main.h"
-
 /**
- * _strcat - a function strcat
- * @dest: first parameter
- * @src: second parameter
- * Return: the string
+ * _strcat - concacinate strings
+ * @dest: desination string
+ * @src: source string
+ * Return: dest string
  */
+
 
 char *_strcat(char *dest, char *src)
 {
-	int len = 0, i;
+	int destlen = 0;
+	int srclen = 0;
+	int i;
 
-	while (dest[len])
-		len++;
-
-	for (i = 0 ; src[i] != 0 ; i++)
-	{
-		dest[len] = src[i];
-		len += 1;
-	}
-	dest[len] = '\0';
+	for (i = 0 ; dest[i] != '\0' ; i++)
+		destlen++;
+	for (i = 0 ; src[i] != '\0' ; i++)
+		srclen++;
+	for (i = 0 ; i <= srclen ; i++)
+		dest[destlen + i] = src[i];
 	return (dest);
-
 }
