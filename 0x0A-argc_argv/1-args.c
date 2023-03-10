@@ -3,7 +3,7 @@
 /**
  * main - a function to print arg number
  * @argc: argc param
- * argv: array of number
+ * @argv: array of number
  * Return: 0 on success
  */
 int main(int argc, char *argv[] __attribute__((unused)))
