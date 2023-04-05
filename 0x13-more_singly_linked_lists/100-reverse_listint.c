@@ -9,20 +9,21 @@
 
 listint_t *reverse_listint(listint_t **head)
 {
+	/*Initialize a pointer to the previous and next node to NULL*/
 	listint_t *prev = NULL;
-	listint_t *current = *head;
+	listint_t *next = NULL;
 
 
-	/* Iterating over the list while reversing the "next" pointers */
-	while (current != NULL)
+	/*  Loop through the list until the current head is NULL */
+	while (*head)
 	{
-		listint_t *next = current->next;
+		next = (*head)->next;
 
-		current->next = prev;
+		(*head)->next = prev;
 
-		prev = current;
+		prev = *head;
 
-		current = next;
+		*head = next;
 	}
 
 	*head = prev;
