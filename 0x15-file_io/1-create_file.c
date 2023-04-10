@@ -22,27 +22,24 @@ int create_file(const char *filename, char *text_content)
 		return (-1);
 	}
 
+	if (text_content != NULL)
+	{
+		for (content_len = 0; text_content[content_len];)
+			content_len++;
+	}
+
 	/* Open file with flags for wronly,creat,trunc Set permissions to rw------- */
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);
 
-	if (fd < 0)
-	{
-		return (-1); /* If opening the file fails */
-	}
-
-	if (text_content != NULL)
-	{
 	/* Get text content length and write it to the file and check if it fails */
 
-		bytes_written = write(fd, text_content, content_len);
+	bytes_written = write(fd, text_content, content_len);
 
-		if (bytes_written < 0 || bytes_written != content_len)
+		if (fd == -1 || bytes_written == -1)
 		{
-			close(fd);
-
+	/* Return -1 if opening fails */
 			return (-1);
 		}
-	}
 
 	/* Close the file and return 1 on success */
 
