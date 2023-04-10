@@ -10,7 +10,9 @@
  */
 int append_text_to_file(const char *filename, char *text_content)
 {
-	int outcome, file_len, w = 0;
+	int fd;
+	int fletters;
+	int rwr;
 
 	/* Check if filename and content of text are NULL */
 	if (filename == NULL)
@@ -18,26 +20,26 @@ int append_text_to_file(const char *filename, char *text_content)
 		return (-1);
 	}
 
+	/* Open the file to append the text into it */
+
+	fd = open(filename, O_WRONLY | O_APPEND);
+
 	if (text_content != NULL)
 	{
-		for (file_len = 0; text_content[file_len];)
+		for (fletters = 0; text_content[fletters]; fletters++)
+			;
 
-			file_len++;
-	}
-	/* Open the file to append the text into it */
-	outcome = open(filename, O_WRONLY | O_APPEND);
+		rwr = write(fd, text_content, fletters);
 
-	w = write(outcome, text_content, file_len);
+		if (rwr == -1)
 
-	/* Return -1 if it fails to open the file */
-	if (outcome == -1 || w == -1)
-	{
-		return (-1);
+			return (-1);
 	}
 
 	/* Return success after closing the file */
 
-	close(outcome);
+	close(fd);
 
 	return (1);
 }
+
