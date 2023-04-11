@@ -305,31 +305,42 @@ void close_elf(int elf)
  */
 int main(int __attribute__((__unused__)) argc, char *argv[])
 {
+	/* Declare variables for ELF header,file descriptor,command line arguments*/
 	Elf64_Ehdr *header;
 	int op, rd;
 
+	/* Try opening the specified file in the command line arguments */
 	op = open(argv[1], O_RDONLY);
 	if (op == -1)
 	{
+
+		/* Print an error message and exit with code 98 if it cant be opened */
 		dprintf(STDERR_FILENO, "Error: Can't read file %s\n", argv[1]);
 		exit(98);
 	}
+	/* Allocate memory for the ELF header using malloc */
 	header = malloc(sizeof(Elf64_Ehdr));
 	if (header == NULL)
 	{
+		/* Print an error message if memory isnt allocated and exit by 98 */
 		close_elf(op);
 		dprintf(STDERR_FILENO, "Error: Can't read file %s\n", argv[1]);
 		exit(98);
 	}
+
+	/*Read the ELF file header from the given file */
 	rd = read(op, header, sizeof(Elf64_Ehdr));
 	if (rd == -1)
 	{
+
+		/* Free memor if reading fails,close descriptor,print error and exit */
 		free(header);
 		close_elf(op);
 		dprintf(STDERR_FILENO, "Error: `%s`: No such file\n", argv[1]);
 		exit(98);
 	}
 
+	/* Check to ensure the file is a valid ELF file */
 	check_elf(header->e_ident);
 	printf("ELF Header:\n");
 	print_magic(header->e_ident);
@@ -341,8 +352,12 @@ int main(int __attribute__((__unused__)) argc, char *argv[])
 	print_type(header->e_type, header->e_ident);
 	print_entry(header->e_entry, header->e_ident);
 
+	/* Free the memory allocated and close the file descriptor */
 	free(header);
 	close_elf(op);
+
+	/* Return 0 to verify it was a success */
+
 	return (0);
 }
 
